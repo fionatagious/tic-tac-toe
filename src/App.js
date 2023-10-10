@@ -2,42 +2,46 @@ import "./App.css";
 import React, { useState } from "react";
 
 function App() {
-  function checkSubset(parentArray, subsetArray) {
-    return subsetArray.every((el) => {
-      return parentArray.includes(el);
-    });
-  }
-
-  const [numbersA, setNumbersA] = useState([]);
-  const [numbersB, setNumbersB] = useState([]);
-  const [turnsLeft, setTurnsLeft] = useState(8);
+  const [squaresX, setNumbersX] = useState([]);
+  const [numbersO, setNumbersO] = useState([]);
+  const [winner, setWinner] = useState(null);
+  const [turnsRemaining, setTurnsRemaining] = useState(8);
   const [marker, setMarker] = useState("X");
-  const [playerA, setPlayerA] = useState(true);
+  const [playerX, setPlayerX] = useState(true);
 
-  function updatePlayerSquares(squareId) {
-    function setNumbersA(numbersA) {
-      numbersA.push(...squareIdArray);
+  function updatePlayerSquares(squareId, player) {
+    function addSquareId(n, id) {
+      n.push(...id);
     }
-    function setNumbersB(numbersB) {
-      numbersB.push(...squareIdArray);
+    function setNumbersX(n, id) {
+      return addSquareId(n, id);
     }
+    function setNumbersO(n, id) {
+      return addSquareId(n, id);
+    }
+
     const squareIdArray = [squareId];
-
-    if (playerA) {
-      setNumbersA(numbersA);
+    if (player) {
+      setNumbersX(squaresX, squareIdArray);
+      squaresX.map((str) => {
+        return parseInt(str);
+      });
     } else {
-      setNumbersB(numbersB);
+      setNumbersO(numbersO, squareIdArray);
+      numbersO.map((str) => {
+        return parseInt(str);
+      });
     }
-    const integersArrayA = numbersA.map((str) => {
-      return parseInt(str);
-    });
-    const integersArrayB = numbersB.map((str) => {
-      return parseInt(str);
-    });
-    return [integersArrayA, integersArrayB];
+    return [squaresX, numbersO];
   }
 
-  function checkForWinner(a, b) {
+  function checkForWinner(squaresArray) {
+    function checkSubset(parentArray, subsetArray) {
+      return subsetArray.every((el) => {
+        return parentArray.includes(el);
+      });
+    }
+
     const winConditions = [
       [0, 1, 2],
       [3, 4, 5],
@@ -49,49 +53,98 @@ function App() {
       [2, 4, 6],
     ];
 
-    winConditions.map((conditionArray) => {
-      return checkSubset(a, conditionArray);
+    const isThereAWinner = winConditions.map((conditionArray) => {
+      return checkSubset(squaresArray, conditionArray);
     });
-    winConditions.map((conditionArray) => {
-      return checkSubset(b, conditionArray);
-    });
+    return isThereAWinner.includes(true);
   }
 
-  const handleClick = (e) => {
+  const handleTurn = (e) => {
     setMarker(marker === "X" ? "O" : "X");
     e.currentTarget.innerHTML = marker;
+    const currentPlayer = playerX ? "X" : "O";
 
-    // update player squares
-    const [aSquares, bSquares] = updatePlayerSquares(e.currentTarget.id);
-    console.log("scores", [aSquares, bSquares]);
+    // add square ID of clicked square to player's array
+    const idInteger = parseInt(e.currentTarget.id);
+    const [aSquares, bSquares] = updatePlayerSquares(idInteger, playerX);
 
     // check for win condition
-    if (checkForWinner(aSquares, bSquares)) {
-      console.log("win condition met");
+    const currentSquaresArray = playerX ? aSquares : bSquares;
+    if (checkForWinner(currentSquaresArray)) {
+      setWinner(currentPlayer);
     } else {
-      console.log("no win");
+      setWinner(null);
     }
 
     // switch players and subtract 1 turn
-    setPlayerA(!playerA);
-    setTurnsLeft(turnsLeft - 1);
+    setPlayerX(!playerX);
+    setTurnsRemaining(turnsRemaining - 1);
+    e.currentTarget.disabled = true;
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>Tic Tac Toe!</p>
+        <h4>Tic Tac Toe</h4>
         <div className="game-board">
-          <div id="0" className="square" onClick={handleClick}></div>
-          <div id="1" className="square" onClick={handleClick}></div>
-          <div id="2" className="square" onClick={handleClick}></div>
-          <div id="3" className="square" onClick={handleClick}></div>
-          <div id="4" className="square" onClick={handleClick}></div>
-          <div id="5" className="square" onClick={handleClick}></div>
-          <div id="6" className="square" onClick={handleClick}></div>
-          <div id="7" className="square" onClick={handleClick}></div>
-          <div id="8" className="square" onClick={handleClick}></div>
+          <button
+            id="0"
+            className="square"
+            onClick={handleTurn}
+            disabled={false}
+          ></button>
+          <button
+            id="1"
+            className="square"
+            onClick={handleTurn}
+            disabled={false}
+          ></button>
+          <button
+            id="2"
+            className="square"
+            onClick={handleTurn}
+            disabled={false}
+          ></button>
+          <button
+            id="3"
+            className="square"
+            onClick={handleTurn}
+            disabled={false}
+          ></button>
+          <button
+            id="4"
+            className="square"
+            onClick={handleTurn}
+            disabled={false}
+          ></button>
+          <button
+            id="5"
+            className="square"
+            onClick={handleTurn}
+            disabled={false}
+          ></button>
+          <button
+            id="6"
+            className="square"
+            onClick={handleTurn}
+            disabled={false}
+          ></button>
+          <button
+            id="7"
+            className="square"
+            onClick={handleTurn}
+            disabled={false}
+          ></button>
+          <button
+            id="8"
+            className="square"
+            onClick={handleTurn}
+            disabled={false}
+          ></button>
         </div>
+        {winner ? (
+          <div style={{ margin: 0 }}>The winner is {winner}!</div>
+        ) : null}
       </header>
     </div>
   );
