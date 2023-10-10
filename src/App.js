@@ -2,6 +2,16 @@ import "./App.css";
 import "./index.css";
 import React, { useState } from "react";
 
+function checkSubset(parentArray, subsetArray) {
+  return subsetArray.every((el) => {
+    return parentArray.includes(el);
+  });
+}
+
+function addSquareId(array, int) {
+  array.push(...int);
+}
+
 function App() {
   const [squaresX, setNumbersX] = useState([]);
   const [numbersO, setNumbersO] = useState([]);
@@ -10,39 +20,23 @@ function App() {
   const [marker, setMarker] = useState("X");
   const [playerX, setPlayerX] = useState(true);
 
-  function updatePlayerSquares(squareId, player) {
-    function addSquareId(n, id) {
-      n.push(...id);
+  function updatePlayerSquares(squareId, playerX) {
+    function setNumbersX(nArray, id) {
+      addSquareId(nArray, id);
     }
-    function setNumbersX(n, id) {
-      return addSquareId(n, id);
-    }
-    function setNumbersO(n, id) {
-      return addSquareId(n, id);
+    function setNumbersO(nArray, id) {
+      addSquareId(nArray, id);
     }
 
-    const squareIdArray = [squareId];
-    if (player) {
-      setNumbersX(squaresX, squareIdArray);
-      squaresX.map((str) => {
-        return parseInt(str);
-      });
+    if (playerX) {
+      setNumbersX(squaresX, [squareId]);
     } else {
-      setNumbersO(numbersO, squareIdArray);
-      numbersO.map((str) => {
-        return parseInt(str);
-      });
+      setNumbersO(numbersO, [squareId]);
     }
     return [squaresX, numbersO];
   }
 
   function checkForWinner(squaresArray) {
-    function checkSubset(parentArray, subsetArray) {
-      return subsetArray.every((el) => {
-        return parentArray.includes(el);
-      });
-    }
-
     const winConditions = [
       [0, 1, 2],
       [3, 4, 5],
@@ -66,13 +60,18 @@ function App() {
     const currentPlayer = playerX ? "X" : "O";
 
     // add square ID of clicked square to player's array
-    const idInteger = parseInt(e.currentTarget.id);
-    const [aSquares, bSquares] = updatePlayerSquares(idInteger, playerX);
+    const [xSquares, oSquares] = updatePlayerSquares(
+      parseInt(e.currentTarget.id),
+      playerX
+    );
 
     // check for win condition
-    const currentSquaresArray = playerX ? aSquares : bSquares;
+    const currentSquaresArray = playerX ? xSquares : oSquares;
     if (checkForWinner(currentSquaresArray)) {
       setWinner(currentPlayer);
+      document
+        .querySelectorAll("button")
+        .forEach((button) => (button.disabled = true));
     } else {
       setWinner(null);
     }
