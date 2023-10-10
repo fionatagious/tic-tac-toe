@@ -1,4 +1,5 @@
 import "./App.css";
+import "./index.css";
 import React, { useState } from "react";
 
 function App() {
@@ -87,60 +88,15 @@ function App() {
       <header className="App-header">
         <h4>Tic Tac Toe</h4>
         <div className="game-board">
-          <button
-            id="0"
-            className="square"
-            onClick={handleTurn}
-            disabled={false}
-          ></button>
-          <button
-            id="1"
-            className="square"
-            onClick={handleTurn}
-            disabled={false}
-          ></button>
-          <button
-            id="2"
-            className="square"
-            onClick={handleTurn}
-            disabled={false}
-          ></button>
-          <button
-            id="3"
-            className="square"
-            onClick={handleTurn}
-            disabled={false}
-          ></button>
-          <button
-            id="4"
-            className="square"
-            onClick={handleTurn}
-            disabled={false}
-          ></button>
-          <button
-            id="5"
-            className="square"
-            onClick={handleTurn}
-            disabled={false}
-          ></button>
-          <button
-            id="6"
-            className="square"
-            onClick={handleTurn}
-            disabled={false}
-          ></button>
-          <button
-            id="7"
-            className="square"
-            onClick={handleTurn}
-            disabled={false}
-          ></button>
-          <button
-            id="8"
-            className="square"
-            onClick={handleTurn}
-            disabled={false}
-          ></button>
+          <button id="0" onClick={handleTurn} disabled={false}></button>
+          <button id="1" onClick={handleTurn} disabled={false}></button>
+          <button id="2" onClick={handleTurn} disabled={false}></button>
+          <button id="3" onClick={handleTurn} disabled={false}></button>
+          <button id="4" onClick={handleTurn} disabled={false}></button>
+          <button id="5" onClick={handleTurn} disabled={false}></button>
+          <button id="6" onClick={handleTurn} disabled={false}></button>
+          <button id="7" onClick={handleTurn} disabled={false}></button>
+          <button id="8" onClick={handleTurn} disabled={false}></button>
         </div>
         {winner ? (
           <div style={{ margin: 0 }}>The winner is {winner}!</div>
