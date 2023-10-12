@@ -9,27 +9,27 @@ function checkSubset(parentArray, subsetArray) {
 }
 
 function App() {
-  const [squaresX, setNumbersX] = useState([]);
-  const [numbersO, setNumbersO] = useState([]);
+  const [squaresX, setSquaresX] = useState([]);
+  const [squaresO, setSquaresO] = useState([]);
   const [winner, setWinner] = useState(null);
   const [turnsRemaining, setTurnsRemaining] = useState(8);
   const [marker, setMarker] = useState("X");
   const [playerX, setPlayerX] = useState(true);
 
   function updatePlayerSquares(squareId, playerX) {
-    function setNumbersX(nArray, id) {
-      nArray.push(...id);
+    function setSquaresX(nArray, id) {
+      nArray.push(id);
     }
-    function setNumbersO(nArray, id) {
-      nArray.push(...id);
+    function setSquaresO(nArray, id) {
+      nArray.push(id);
     }
 
     if (playerX) {
-      setNumbersX(squaresX, [squareId]);
+      setSquaresX(squaresX, squareId);
     } else {
-      setNumbersO(numbersO, [squareId]);
+      setSquaresO(squaresO, squareId);
     }
-    return [squaresX, numbersO];
+    return [squaresX, squaresO];
   }
 
   function checkForWinner(squaresArray) {
@@ -79,8 +79,8 @@ function App() {
   }
 
   function resetBoard() {
-    setNumbersX([]);
-    setNumbersO([]);
+    setSquaresX([]);
+    setSquaresO([]);
     setWinner(null);
     setTurnsRemaining(8);
     setMarker("X");
