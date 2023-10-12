@@ -8,10 +8,6 @@ function checkSubset(parentArray, subsetArray) {
   });
 }
 
-function addSquareId(array, int) {
-  array.push(...int);
-}
-
 function App() {
   const [squaresX, setNumbersX] = useState([]);
   const [numbersO, setNumbersO] = useState([]);
@@ -22,10 +18,10 @@ function App() {
 
   function updatePlayerSquares(squareId, playerX) {
     function setNumbersX(nArray, id) {
-      addSquareId(nArray, id);
+      nArray.push(...id);
     }
     function setNumbersO(nArray, id) {
-      addSquareId(nArray, id);
+      nArray.push(...id);
     }
 
     if (playerX) {
@@ -82,7 +78,7 @@ function App() {
     e.currentTarget.disabled = true;
   }
 
-  function clearBoard() {
+  function resetBoard() {
     setNumbersX([]);
     setNumbersO([]);
     setWinner(null);
@@ -113,7 +109,7 @@ function App() {
         {winner ? (
           <>
             <div className="winner-text">The winner is {winner}!</div>
-            <div className="play-again" onClick={clearBoard}>
+            <div className="play-again" onClick={resetBoard}>
               Click to play again
             </div>
           </>
