@@ -21,6 +21,28 @@ code {
   padding: 1rem;
 }
 
+.winner-text {
+  margin: 1rem;
+}
+
+.play-again {
+  border: solid 2px black;
+  border-radius: 0.8rem;
+  background-color: blueviolet;
+  font-weight: 500;
+  color: white;
+  font-size: 1.5rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+  margin: 1rem;
+  &:hover {
+    color: black;
+  }
+}
+
 button {
   line-height: 1.25;
   cursor: pointer;

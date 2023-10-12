@@ -54,7 +54,7 @@ function App() {
     return isThereAWinner.includes(true);
   }
 
-  const handleTurn = (e) => {
+  function handleTurn(e) {
     setMarker(marker === "X" ? "O" : "X");
     e.currentTarget.innerHTML = marker;
     const currentPlayer = playerX ? "X" : "O";
@@ -80,7 +80,20 @@ function App() {
     setPlayerX(!playerX);
     setTurnsRemaining(turnsRemaining - 1);
     e.currentTarget.disabled = true;
-  };
+  }
+
+  function clearBoard() {
+    setNumbersX([]);
+    setNumbersO([]);
+    setWinner(null);
+    setTurnsRemaining(8);
+    setMarker("X");
+    setPlayerX(true);
+    document.querySelectorAll("button").forEach((button) => {
+      button.disabled = false;
+      button.innerHTML = "";
+    });
+  }
 
   return (
     <div className="App">
@@ -98,7 +111,12 @@ function App() {
           <button id="8" onClick={handleTurn} disabled={false}></button>
         </div>
         {winner ? (
-          <div style={{ margin: 0 }}>The winner is {winner}!</div>
+          <>
+            <div className="winner-text">The winner is {winner}!</div>
+            <div className="play-again" onClick={clearBoard}>
+              Click to play again
+            </div>
+          </>
         ) : null}
       </header>
     </div>
